@@ -13,9 +13,13 @@ const Search = () => {
         `https://api.openweathermap.org/data/2.5/weather?q=${cityNameRef.current.value}&appid=${myApi}&units=metric`
       );
       console.log(response.data);
-      const d = new Date(response.data.dt);
+      const d = new Date().getHours();
       console.log(d);
-      console.log(response.data.dt);
+      const sunrise = response.data.sys.sunrise;
+      const hours = sunrise / (1000 * 60 * 60);
+      console.log("hours", hours);
+      //   console.log(response.data.dt);
+      setWeatherData(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -37,7 +41,7 @@ const Search = () => {
           <i className="bi bi-search"></i>
         </button>
       </form>
-      <Card />
+      {weatherData ? <Card weatherData={weatherData} /> : <div>No Data</div>}
     </div>
   );
 };
